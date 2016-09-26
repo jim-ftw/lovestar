@@ -20,7 +20,7 @@ Object.size = function(obj) {
         console.log(numberOfResults)
         data.images = shuffle(data.images)
       $.each( data.images, function( i, item ) {
-          $('<div class="col-sm-6 col-md-3 col-lg-3 web"><div class="portfolio-item"><div class="hover-bg"><a href="' + item.media_file_path + '" title="' + item.caption + '" rel="prettyPhoto"><div class="hover-text"><h4></h4><small></small> </div><img src="'+ item.small_media_file_path + '" class="img-responsive" alt=""> </a></div></div></div>').appendTo('.portfolio-items')
+          $('<div class="col-sm-6 col-md-3 col-lg-3 web"><div class="portfolio-item"><div class="hover-bg"><a href="' + item.media_file_path + '" title="' + item.caption + '" rel="prettyPhoto"><div class="hover-text"><h4></h4><small></small> </div><img src="'+ item.media_file_path + '" class="img-responsive" alt=""> </a></div></div></div>').appendTo('.portfolio-items')
 
         if ( i === 7 ) {
           return false;

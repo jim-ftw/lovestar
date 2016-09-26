@@ -46,6 +46,7 @@ def merge_two_dicts(x, y):
 
 
 def resize_big_images(image_path):
+    fname, file_extension = os.path.splitext(image_path)
     img = Image.open(image_path)
     max_size = 800
     original_size = max(img.size[0], img.size[1])
@@ -59,20 +60,6 @@ def resize_big_images(image_path):
         img = img.resize((resized_width, resized_height), Image.ANTIALIAS)
         img.save(image_path, 'JPEG')
         logger.info('image resized')
-
-
-def create_smaller_images(image_path):
-    fname, file_extension = os.path.splitext(image_path)
-    img = Image.open(image_path)
-    width, height = img.size
-    left = (width - 800) / 2
-    right = (width + 800) / 2
-    top = (height - 800) / 2
-    bottom = (height + 800) / 2
-    new_img = img.crop((left, top, right, bottom))
-    new_img = new_img.resize((400, 400), Image.ANTIALIAS)
-    new_img.save(fname + '_small' + file_extension)
-    logger.info('thumbnail created')
 
 
 def parse_json(tag_page_json):
@@ -97,9 +84,7 @@ def parse_json(tag_page_json):
         media_url = entry['display_src']
         media_caption = entry['caption']
         media_file_name = 'image' + '%0.6d' % n + '.jpg'
-        small_media_file_name = 'image' + '%0.6d' % n + '_small.jpg'
         media_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', media_file_name))
-        small_media_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', small_media_file_name))
         if entry['is_video'] is False and media_id not in downloaded_photos:
             with open(media_file_path, 'wb') as handle:
                 response = requests.get(media_url, stream=True)
@@ -114,8 +99,6 @@ def parse_json(tag_page_json):
             entry['caption'] = media_caption
             entry['media_file_path'] = os.path.relpath(
                 media_file_path, os.path.join(os.path.dirname(__file__), '..'))
-            entry['small_media_file_path'] = os.path.relpath(
-                small_media_file_path, os.path.join(os.path.dirname(__file__), '..'))
             f = open(lsphotos_json, 'r')
             lsphotos_dict = json.loads(f.read())
             f.close()
@@ -127,7 +110,6 @@ def parse_json(tag_page_json):
                 pickle.dump(downloaded_photos, outfile)
             logging.info('photo added ' + media_id)
             resize_big_images(media_file_path)
-            create_smaller_images(media_file_path)
             time.sleep(random.randint(1, 10))
 
 
@@ -173,7 +155,6 @@ def rename_files():
                 json.dump(ls_json, fp)
             n += 1
             logging.info('photo renamed ' + fname + ' ' + file_name)
-
 
 for item in tags:
     tagged_url = insta_url + item
