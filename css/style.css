@@ -221,13 +221,25 @@ hr {
 	font-weight: 600;
 	color: #fff;
 }
+.row-centered {
+    text-align:center;
+}
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
 .chart {
 	position: relative;
 	display: inline-block;
 	width: 152px;
 	height: 152px;
-	margin-bottom: 26px;
 	text-align: center;
+	border-radius: 50%;
 }
 .chart canvas {
 	position: absolute;

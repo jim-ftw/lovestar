@@ -83,6 +83,7 @@ def parse_json(tag_page_json):
         media_id = entry['id']
         media_url = entry['display_src']
         media_caption = entry['caption']
+        media_code = entry['code']
         media_file_name = 'image' + '%0.6d' % n + '.jpg'
         media_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', media_file_name))
         if entry['is_video'] is False and media_id not in downloaded_photos:
@@ -95,6 +96,8 @@ def parse_json(tag_page_json):
             entry = {}
             media_index = n - 1
             entry['media_id'] = media_id
+            entry['instagram_url'] = 'https://www.instagram.com/p/' + media_code
+            entry['media_code'] = media_code
             entry['media_url'] = media_url
             entry['caption'] = media_caption
             entry['media_file_path'] = os.path.relpath(
@@ -155,6 +158,7 @@ def rename_files():
                 json.dump(ls_json, fp)
             n += 1
             logging.info('photo renamed ' + fname + ' ' + file_name)
+
 
 for item in tags:
     tagged_url = insta_url + item
