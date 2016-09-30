@@ -6,7 +6,6 @@ import time
 import random
 import logging
 import sys
-from pprint import pprint
 import pickle
 from PIL import Image
 
@@ -43,6 +42,23 @@ def merge_two_dicts(x, y):
     z = x.copy()
     z.update(y)
     return z
+
+
+def reset_dir():
+    for the_file in os.listdir(media_file_folder):
+        file_path = os.path.join(media_file_folder, the_file)
+        try:
+            if os.path.isfile(file_path):
+                os.unlink(file_path)
+                # elif os.path.isdir(file_path): shutil.rmtree(file_path)
+        except Exception as e:
+            print(e)
+    instagram_dict = {
+        "images": []
+    }
+    with open(lsphotos_json, 'w') as f:
+        json.dump(instagram_dict, f)
+    open(os.path.join(media_file_folder, 'downloaded_photos.pkl'), 'a')
 
 
 def resize_big_images(image_path):
@@ -165,3 +181,6 @@ for item in tags:
     while tagged_url:
         tagged_url = get_json(tagged_url, item)
         time.sleep(random.randint(1, 10))
+
+
+# reset_dir()

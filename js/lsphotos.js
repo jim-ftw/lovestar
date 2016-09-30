@@ -13,7 +13,7 @@ Object.size = function(obj) {
     return size;
 };
 
-(function() {
+$(document).ready(function() {
     var jsonData = "../lsphotos/lsphotos.json";
     $.getJSON(jsonData)
         .done(function(data) {
@@ -21,14 +21,14 @@ Object.size = function(obj) {
             console.log(numberOfResults);
             data.images = shuffle(data.images);
             $.each(data.images, function(i, item) {
-                $('<div class="col-sm-6 col-md-3 col-lg-3 web"><div class="portfolio-item"><div class="hover-bg"><a href="' + item.media_file_path + '" title="' + item.caption + '" rel="prettyPhoto"><div class="hover-text"><h4></h4><small>' + item.caption + '</small> </div><img src="' + item.media_file_path + '" class="img-responsive" alt=""> </a></div></div></div>').appendTo('.portfolio-items')
-
+                $('<div class="col-sm-6 col-md-3 col-lg-3 web"><div class="portfolio-item"><div class="hover-bg"><a href="' + item.instagram_url + '" title="' + item.caption + '" rel="prettyPhoto"><div class="hover-text"><h4></h4><small>' + item.caption + '</small> </div><img src="' + item.media_file_path + '" class="img-responsive" alt=""> </a></div></div></div>').appendTo('.portfolio-items')
+                console.log($('.portfolio-item').position());
                 if (i === 7) {
                     return false;
                 }
             });
         });
-})();
+});
 
 
 // $(document).ready(function() {

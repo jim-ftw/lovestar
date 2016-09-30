@@ -13,7 +13,7 @@ Object.size = function(obj) {
     return size;
 };
 
-(function() {
+$(document).ready(function() {
     var jsonData = "../strava/strava.json";
     $.getJSON(jsonData)
         .done(function(data) {
