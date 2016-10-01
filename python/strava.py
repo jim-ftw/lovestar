@@ -17,8 +17,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 ls_club_id = '102393'
-# access_token = os.getenv('strava_access_token')
-access_token = 'c0f75dc30c25e210b99c8b9fff8bcd5163270674'
+access_token = os.getenv('strava_access_token')
 strava_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'strava'))
 strava_json = os.path.join(strava_dir, 'strava.json')
 
