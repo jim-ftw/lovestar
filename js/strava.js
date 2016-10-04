@@ -21,7 +21,7 @@ $(document).ready(function() {
             console.log(numberOfResults);
             data.members = shuffle(data.members);
             $.each(data.members, function(i, item) {
-                $('<div class="col-md-3 col-sm-6 skill col-centered"><a href="' + item.strava_link + '"><img src="' + item.profile_pic + '" class="chart"><h4>' + item.first_name + ' ' + item.last_name + '</h4></a></div>').appendTo('.strava')
+                $('<div class="col-md-2 col-sm-4 team-member col-centered"><a href="' + item.strava_link + '"><img src="' + item.profile_pic + '" class="chart"><h4>' + item.first_name + '<br>' + item.last_name + '</h4></a></div>').appendTo('.strava-team')
 
                 if (i === numberOfResults - 1) {
                     return false;
