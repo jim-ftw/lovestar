@@ -8,6 +8,7 @@ import logging
 import sys
 import pickle
 from PIL import Image
+import datetime
 
 
 def get_numbers_from_filename(filename):
@@ -42,6 +43,11 @@ def merge_two_dicts(x, y):
     z = x.copy()
     z.update(y)
     return z
+
+
+def convert_to_iso_time(epoch_time):
+    dt = datetime.datetime.utcfromtimestamp(epoch_time)
+    return dt.isoformat()
 
 
 def reset_dir():
@@ -100,6 +106,8 @@ def parse_json(tag_page_json):
         media_url = entry['display_src']
         media_caption = entry['caption']
         media_code = entry['code']
+        media_date = convert_to_iso_time(int(entry['date']))
+        media_utc_date = entry['date']
         media_file_name = 'image' + '%0.6d' % n + '.jpg'
         media_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', media_file_name))
         if entry['is_video'] is False and media_id not in downloaded_photos:
@@ -116,6 +124,8 @@ def parse_json(tag_page_json):
             entry['media_code'] = media_code
             entry['media_url'] = media_url
             entry['caption'] = media_caption
+            entry['date'] = media_date
+            entry['utc_date'] = media_utc_date
             entry['media_file_path'] = os.path.relpath(
                 media_file_path, os.path.join(os.path.dirname(__file__), '..'))
             f = open(lsphotos_json, 'r')
@@ -175,12 +185,11 @@ def rename_files():
             n += 1
             logging.info('photo renamed ' + fname + ' ' + file_name)
 
+# reset_dir()
+
 
 for item in tags:
     tagged_url = insta_url + item
     while tagged_url:
         tagged_url = get_json(tagged_url, item)
         time.sleep(random.randint(1, 10))
-
-
-# reset_dir()
