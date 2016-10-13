@@ -51,7 +51,7 @@ $('#nav').affix({
 
   	// Portfolio isotope filter
     $(window).load(function() {
-        var $container = $('.portfolio-items');
+        var $container = $('.instagram-items');
         $container.isotope({
             filter: '*',
             animationOptions: {
@@ -89,9 +89,9 @@ $('#nav').affix({
 	});
 
   	// Pretty Photo
-	$("a[rel^='prettyPhoto']").prettyPhoto({
-		social_tools: false
-	});
+	// $("a[rel^='prettyPhoto']").prettyPhoto({
+	// 	social_tools: false
+	// });
 
 }());
 

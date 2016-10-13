@@ -14,18 +14,33 @@ Object.size = function(obj) {
 };
 
 $(document).ready(function() {
+    $.getScript("../js/jquery.fancybox.pack.js")
     var jsonData = "../lsphotos/lsphotos.json";
     $.getJSON(jsonData)
         .done(function(data) {
             var numberOfResults = Object.size(data.images);
-            console.log(numberOfResults);
             data.images = shuffle(data.images);
             $.each(data.images, function(i, item) {
-                $('<div class="col-sm-6 col-md-3 col-lg-3 web"><div class="instagram-item"><div class="hover-bg"><a href="' + item.instagram_url + '" title="' + item.caption + '" rel="prettyPhoto"><div class="hover-text"><h4></h4><small>' + item.caption + '</small> </div><img src="' + item.media_file_path + '" class="img-responsive" alt=""> </a></div></div></div>').appendTo('.instagram-items')
-                console.log($('.instagram-item').position());
-                if (i === 7) {
-                    return false;
-                }
+                var utcSeconds = item.utc_date;
+                var d = new Date(0);
+                d.setUTCSeconds(utcSeconds);
+                $('<div class="col-sm-6 col-md-3 col-lg-3"><div class="instagram-item"><div class="hover-bg"><a href="' + item.media_file_path + '" title="' + item.caption + '" rel="lightbox"><div class="hover-text"><h4>' + item.owner.username + '</h4><small>' + item.caption + '</small> </div><img src="' + item.media_file_path + '" class="img-responsive" alt="' + item.caption + '"> </a></div></div></div>').appendTo('.instagram-items');
+                $('.instagram-item a').fancybox({
+                    padding: 0,
+                    helpers: {
+                        title: {
+                            type: 'outside'
+                        },
+                        overlay: {
+                            locked: false,
+                            closeClick: true,
+                            css: {
+                                'background': 'rgba(0, 0, 0, 0.7)'
+                            }
+                        }
+                    }
+                });
+
             });
         });
 });
