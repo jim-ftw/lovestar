@@ -84,6 +84,28 @@ def resize_big_images(image_path):
         logger.info('image resized')
 
 
+def create_thumbnail():
+    f = open(lsphotos_json)
+    lsjson = json.loads(f.read())
+    size = 400, 400
+    for item in lsjson['images']:
+        if 'thumbnail_path' in item:
+            logging.info('skipping ' + item['media_code'])
+        else:
+            path, big_picture = os.path.split(item['media_file_path'])
+            file_name, file_ext = os.path.splitext(big_picture)
+            thumbnail_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', file_name + '_small' + file_ext))
+            media_file = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', big_picture))
+            im = Image.open(media_file)
+            im.thumbnail(size)
+            im.save(thumbnail_path)
+            item['thumbnail_path'] = os.path.relpath(
+                thumbnail_path, os.path.join(os.path.dirname(__file__), '..'))
+            with open(lsphotos_json, 'w') as fp:
+                json.dump(lsjson, fp)
+            logging.info('created thumbnail for ' + item['media_code'])
+
+
 def parse_json(tag_page_json):
     for item, entry in enumerate(tag_page_json):
         dir_list = os.listdir(media_file_folder)
@@ -142,6 +164,33 @@ def parse_json(tag_page_json):
             time.sleep(random.randint(1, 10))
 
 
+def get_photo_info():
+    f = open(lsphotos_json)
+    lsjson = json.loads(f.read())
+    for item in lsjson['images']:
+        if 'owner' in item:
+            logging.info('skipping ' + item['media_code'])
+        else:
+            url = item['instagram_url']
+            r = requests.get(url)
+            text = r.text
+            photo_json = json.loads(re.search(r"window._sharedData\s*=\s*(.*);", text).group(1))
+            media = photo_json['entry_data']['PostPage'][0]['media']
+            item['owner'] = {}
+            item['owner']['id'] = media['owner']['id']
+            item['owner']['username'] = media['owner']['username']
+            item['owner']['owner_url'] = str('https://www.instagram.com/' + media['owner']['username'])
+            if media['location'] is not None:
+                item['location'] = {}
+                item['location']['name'] = media['location']['name']
+                item['location']['id'] = media['location']['id']
+                item['location']['location_url'] = str('https://www.instagram.com/explore/locations/' + media['location']['id'])
+            with open(lsphotos_json, 'w') as fp:
+                json.dump(lsjson, fp)
+            logging.info('updated photo info for ' + item['media_code'])
+            time.sleep(random.randint(1, 10))
+
+
 def get_json(url, tag):
     # new_url = insta_url + tag
     r = requests.get(url)
@@ -193,3 +242,5 @@ for item in tags:
     while tagged_url:
         tagged_url = get_json(tagged_url, item)
         time.sleep(random.randint(1, 10))
+get_photo_info()
+# create_thumbnail()
