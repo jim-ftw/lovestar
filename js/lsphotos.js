@@ -40,6 +40,9 @@ $(document).ready(function() {
                         }
                     }
                 });
+                if (i === 7) {
+                    return false;
+                }
 
             });
         });
