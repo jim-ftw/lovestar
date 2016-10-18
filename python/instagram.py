@@ -236,8 +236,6 @@ def rename_files():
 
 # reset_dir()
 
-get_photo_info()
-
 for item in tags:
     tagged_url = insta_url + item
     while tagged_url:
@@ -245,3 +243,4 @@ for item in tags:
         time.sleep(random.randint(1, 10))
 
 get_photo_info()
+create_thumbnail()
