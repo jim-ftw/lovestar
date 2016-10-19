@@ -9,6 +9,7 @@ import sys
 import pickle
 from PIL import Image
 import datetime
+import create_html
 
 
 def get_numbers_from_filename(filename):
@@ -26,6 +27,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 lsphotos_json = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', 'lsphotos.json'))
 media_file_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos'))
+instagram_page_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'instagram'))
 
 insta_url = 'https://www.instagram.com/explore/tags/'
 
@@ -234,7 +236,6 @@ def rename_files():
             n += 1
             logging.info('photo renamed ' + fname + ' ' + file_name)
 
-# reset_dir()
 
 for item in tags:
     tagged_url = insta_url + item
@@ -244,3 +245,5 @@ for item in tags:
 
 get_photo_info()
 create_thumbnail()
+create_html.reset_dir()
+create_html.iterate_json()
