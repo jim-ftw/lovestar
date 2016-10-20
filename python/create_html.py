@@ -117,11 +117,7 @@ ig_index_tail = '''
     </div>
     <script type="text/javascript" src="../js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/SmoothScroll.js"></script>
-    <script type="text/javascript" src="../js/jquery.isotope.js"></script>
-    <script type="text/javascript" src="../js/jquery.counterup.js"></script>
-    <script type="text/javascript" src="../js/waypoints.js"></script>
     <script type="text/javascript" src="../js/jqBootstrapValidation.js"></script>
-    <script type="text/javascript" src="../js/contact_me.js"></script>
     <script type="text/javascript" src="../js/jquery.jscroll.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
     <script type="text/javascript">
