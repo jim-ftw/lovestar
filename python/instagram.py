@@ -15,14 +15,14 @@ import create_html
 def get_numbers_from_filename(filename):
     return re.search(r'\d+', filename).group(0)
 
-# logger = logging.getLogger()
-# handler = logging.StreamHandler(sys.stdout)
-# formatter = logging.Formatter('%(levelname)-8s %(message)s')
-# handler.setFormatter(formatter)
-# logger.addHandler(handler)
-# logger.setLevel(logging.INFO)
-# logging.getLogger("requests").setLevel(logging.WARNING)
-# logging.getLogger("urllib3").setLevel(logging.WARNING)
+logger = logging.getLogger()
+handler = logging.StreamHandler(sys.stdout)
+formatter = logging.Formatter('%(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 lsphotos_json = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', 'lsphotos.json'))
@@ -83,7 +83,7 @@ def resize_big_images(image_path):
             resized_width = int(round((max_size / float(img.size[1])) * img.size[0]))
         img = img.resize((resized_width, resized_height), Image.ANTIALIAS)
         img.save(image_path, 'JPEG')
-        logging.info('image resized')
+        logger.info('image resized')
 
 
 def create_thumbnail():
@@ -237,13 +237,13 @@ def rename_files():
             logging.info('photo renamed ' + fname + ' ' + file_name)
 
 
-# for item in tags:
-#     tagged_url = insta_url + item
-#     while tagged_url:
-#         tagged_url = get_json(tagged_url, item)
-#         time.sleep(random.randint(1, 10))
-#
-# get_photo_info()
-# create_thumbnail()
-# create_html.reset_dir()
-# create_html.iterate_json()
+for item in tags:
+    tagged_url = insta_url + item
+    while tagged_url:
+        tagged_url = get_json(tagged_url, item)
+        time.sleep(random.randint(1, 10))
+
+get_photo_info()
+create_thumbnail()
+create_html.reset_dir()
+create_html.iterate_json()

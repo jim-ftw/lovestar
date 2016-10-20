@@ -6,14 +6,14 @@ import logging
 import sys
 
 
-# logger = logging.getLogger()
-# handler = logging.StreamHandler(sys.stdout)
-# formatter = logging.Formatter('%(levelname)-8s %(message)s')
-# handler.setFormatter(formatter)
-# logger.addHandler(handler)
-# logger.setLevel(logging.INFO)
-# logging.getLogger("requests").setLevel(logging.WARNING)
-# logging.getLogger("urllib3").setLevel(logging.WARNING)
+logger = logging.getLogger()
+handler = logging.StreamHandler(sys.stdout)
+formatter = logging.Formatter('%(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 ls_club_id = '102393'
@@ -76,5 +76,5 @@ def get_json(club_id):
         logging.info('photo added ' + str(strava_id))
 
 
-# reset_strava_json()
-# get_json(ls_club_id)
+reset_strava_json()
+get_json(ls_club_id)

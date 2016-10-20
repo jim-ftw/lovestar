@@ -24,14 +24,14 @@ def decode_unicode_references(data):
     return re.sub("&#(\d+)(;|(?=\s))", _callback, data)
 
 
-# logger = logging.getLogger()
-# handler = logging.StreamHandler(sys.stdout)
-# formatter = logging.Formatter('%(levelname)-8s %(message)s')
-# handler.setFormatter(formatter)
-# logger.addHandler(handler)
-# logger.setLevel(logging.INFO)
-# logging.getLogger("requests").setLevel(logging.WARNING)
-# logging.getLogger("urllib3").setLevel(logging.WARNING)
+logger = logging.getLogger()
+handler = logging.StreamHandler(sys.stdout)
+formatter = logging.Formatter('%(levelname)-8s %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.setLevel(logging.INFO)
+logging.getLogger("requests").setLevel(logging.WARNING)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 
 lsphotos_json = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lsphotos', 'lsphotos.json'))
@@ -165,7 +165,7 @@ def reset_dir():
     ig_index_file = os.path.join(instagram_page_folder, 'instagram.html')
     with open(ig_index_file, 'w') as f:
         f.write(ig_index_head)
-    logging.info('Instagram folder reset')
+    logger.info('Instagram folder reset')
 
 
 def write_photo_entry(file_name, media_file_path, caption, owner, thumbnail_path):
@@ -211,7 +211,7 @@ def create_index_html():
         if iter_num == 20:
             with open(ig_index_file, 'a') as f:
                 f.write(ig_index_tail)
-            logging.info('created instagram index file')
+            logger.info('created instagram index file')
             break
 
 
@@ -251,7 +251,7 @@ def create_page_html():
                     f.write('<a href="instagram' + str(page_num + 1) + '.html" class="next">Next Page</a>')
                     f.write('</center>')
                 page_num += 1
-                logging.info('created page number ' + str(page_num))
+                logger.info('created page number ' + str(page_num))
 
 
 def pretty_html():
@@ -263,7 +263,7 @@ def pretty_html():
         prettyHTML = soup.prettify()
         with open(file_path, 'w') as f:
             f.write(prettyHTML)
-        logging.info('prettified ' + str(file_path))
+        logger.info('prettified ' + str(file_path))
 
 
 def iterate_json():
@@ -292,7 +292,7 @@ def iterate_json():
                     f.write('<center>')
                     f.write('<a href="instagram' + str(page_num + 1) + '.html" class="next">Next Page</a>')
                     f.write('</center>')
-                logging.info('page written ' + str(page_num))
+                logger.info('page written ' + str(page_num))
                 page_num += 1
         iter_num += 1
     with open(ig_index_file, 'a') as f:
