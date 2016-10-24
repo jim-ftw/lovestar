@@ -7,6 +7,7 @@ import time
 import random
 import git
 import os
+import datetime
 
 repo_dir = lsphotos_json = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
@@ -33,11 +34,13 @@ tags = [
 
 
 def git_push():
+    today = datetime.date.today()
+    message = "instagram and strava updates from " + str(today)
     repo = git.Repo(repo_dir)
     print repo.git.status()
     print repo.git.add(all=True)
     print repo.git.status()
-    print repo.git.commit(m="instagram and strava updates")
+    print repo.git.commit(m=message)
 
 
 if __name__ == "__main__":
