@@ -42,7 +42,6 @@ def git_push():
     print repo.git.status()
     print repo.git.commit(m=message)
 
-
 if __name__ == "__main__":
     strava.reset_strava_json()
     strava.get_json(ls_club_id)
