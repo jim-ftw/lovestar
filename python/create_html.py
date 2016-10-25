@@ -205,7 +205,7 @@ def write_photo_entry(file_name, media_file_path, caption, owner, thumbnail_path
         myfile.write('\n')
         myfile.write('                      <small>' + caption + '</small> </div>')
         myfile.write('\n')
-        myfile.write('                      <img src="../' + thumbnail_path + '" class="img-responsive lazy" alt="' + caption + '">')
+        myfile.write('                      <img src="../' + thumbnail_path + '" class="img-responsive lazy" alt="">')
         myfile.write('\n')
         myfile.write('                  </a>')
         myfile.write('\n')
