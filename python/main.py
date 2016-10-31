@@ -34,25 +34,27 @@ tags = [
 
 
 def git_push():
-    today = datetime.date.today()
-    message = "instagram and strava updates from " + str(today)
+    # today = datetime.date.today()
+    # message = "instagram and strava updates from " + str(today)
     repo = git.Repo(repo_dir)
-    print repo.git.status()
+    # print repo.git.status()
     print repo.git.add(all=True)
     print repo.git.status()
+    message = 'using json to determine what ig photos have been downloaded'
     print repo.git.commit(m=message)
 
-if __name__ == "__main__":
-    strava.reset_strava_json()
-    strava.get_json(ls_club_id)
-    logger.info('strava complete')
-    for item in tags:
-        tagged_url = insta_url + item
-        while tagged_url:
-            tagged_url = instagram.get_json(tagged_url, item)
-            time.sleep(random.randint(1, 10))
-    instagram.get_photo_info()
-    instagram.create_thumbnail()
-    create_html.reset_dir()
-    create_html.iterate_json()
-    git_push()
+# if __name__ == "__main__":
+#     strava.reset_strava_json()
+#     strava.get_json(ls_club_id)
+#     logger.info('strava complete')
+#     for item in tags:
+#         tagged_url = insta_url + item
+#         while tagged_url:
+#             tagged_url = instagram.get_json(tagged_url, item)
+#             time.sleep(random.randint(1, 10))
+#     instagram.get_photo_info()
+#     instagram.create_thumbnail()
+#     create_html.reset_dir()
+#     create_html.iterate_json()
+#     git_push()
+git_push()

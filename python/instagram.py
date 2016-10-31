@@ -6,7 +6,6 @@ import time
 import random
 import logging
 import sys
-import pickle
 from PIL import Image
 import datetime
 
@@ -65,7 +64,6 @@ def reset_dir():
     }
     with open(lsphotos_json, 'w') as f:
         json.dump(instagram_dict, f)
-    open(os.path.join(media_file_folder, 'downloaded_photos.pkl'), 'a')
 
 
 def resize_big_images(image_path):
@@ -125,7 +123,6 @@ def parse_json(tag_page_json):
             dp = json.loads(fej.read())
         for item in dp['images']:
             downloaded_photos.append(item['media_id'])
-        print downloaded_photos
         media_id = entry['id']
         media_url = entry['display_src']
         media_caption = entry['caption']
@@ -161,6 +158,8 @@ def parse_json(tag_page_json):
             logging.info('photo added ' + media_id)
             resize_big_images(media_file_path)
             time.sleep(random.randint(1, 10))
+        else:
+            logging.info('skipping photo ' + media_id)
 
 
 def get_photo_info():
@@ -233,7 +232,7 @@ def rename_files():
             n += 1
             logging.info('photo renamed ' + fname + ' ' + file_name)
 
-
+# reset_dir()
 # for item in tags:
 #     tagged_url = insta_url + item
 #     while tagged_url:
