@@ -111,6 +111,7 @@ def parse_json(tag_page_json):
     for item, entry in enumerate(tag_page_json):
         dir_list = os.listdir(media_file_folder)
         max_list = []
+        downloaded_photos = []
         for item in dir_list:
             if item[:5] == 'image':
                 max_list.append(item)
@@ -120,11 +121,11 @@ def parse_json(tag_page_json):
             max_item = max(max_list)
             n = int(get_numbers_from_filename(max_item))
             n += 1
-        fej = open(os.path.join(media_file_folder, 'downloaded_photos.pkl'), 'rb')
-        try:
-            downloaded_photos = pickle.load(fej)
-        except EOFError:
-            downloaded_photos = []
+        with open(lsphotos_json, 'r') as fej:
+            dp = json.loads(fej.read())
+        for item in dp['images']:
+            downloaded_photos.append(item['media_id'])
+        print downloaded_photos
         media_id = entry['id']
         media_url = entry['display_src']
         media_caption = entry['caption']
@@ -157,9 +158,6 @@ def parse_json(tag_page_json):
             lsphotos_dict['images'].insert(media_index, entry)
             with open(lsphotos_json, 'w') as fp:
                 json.dump(lsphotos_dict, fp)
-            downloaded_photos.append(media_id)
-            with open(os.path.join(media_file_folder, 'downloaded_photos.pkl'), 'wb') as outfile:
-                pickle.dump(downloaded_photos, outfile)
             logging.info('photo added ' + media_id)
             resize_big_images(media_file_path)
             time.sleep(random.randint(1, 10))
