@@ -159,7 +159,7 @@ def parse_json(tag_page_json):
             resize_big_images(media_file_path)
             time.sleep(random.randint(1, 10))
         else:
-            logging.info('skipping photo ' + media_id)
+            logging.debug('skipping photo ' + media_id)
 
 
 def get_photo_info():

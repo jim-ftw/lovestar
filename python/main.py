@@ -5,11 +5,7 @@ import instagram
 import create_html
 import time
 import random
-import git
-import os
-import datetime
 
-repo_dir = lsphotos_json = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 logger = logging.getLogger()
 handler = logging.StreamHandler(sys.stdout)
@@ -33,15 +29,6 @@ tags = [
 ]
 
 
-def git_push():
-    today = datetime.date.today()
-    message = "instagram and strava updates from " + str(today)
-    repo = git.Repo(repo_dir)
-    print repo.git.status()
-    print repo.git.add(all=True)
-    print repo.git.status()
-    print repo.git.commit(m=message)
-
 if __name__ == "__main__":
     strava.reset_strava_json()
     strava.get_json(ls_club_id)
@@ -55,4 +42,3 @@ if __name__ == "__main__":
     instagram.create_thumbnail()
     create_html.reset_dir()
     create_html.iterate_json()
-    git_push()
