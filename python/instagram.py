@@ -167,7 +167,7 @@ def get_photo_info():
     lsjson = json.loads(f.read())
     for item in lsjson['images']:
         if 'owner' in item:
-            logging.info('skipping ' + item['media_code'])
+            logging.debug('skipping ' + item['media_code'])
         else:
             url = item['instagram_url']
             r = requests.get(url)
