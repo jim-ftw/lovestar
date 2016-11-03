@@ -90,7 +90,7 @@ def create_thumbnail():
     size = 400, 400
     for item in lsjson['images']:
         if 'thumbnail_path' in item:
-            logging.info('skipping ' + item['media_code'])
+            logging.debug('skipping ' + item['media_code'])
         else:
             path, big_picture = os.path.split(item['media_file_path'])
             file_name, file_ext = os.path.splitext(big_picture)
@@ -204,9 +204,7 @@ def get_json(url, tag):
         dp = json.loads(fej.read())
     for item in dp['images']:
         downloaded_photos.append(item['media_id'])
-    pprint(downloaded_photos)
     for item, entry in enumerate(tag_page):
-        pprint(entry)
         media_id = entry['id']
         if media_id in downloaded_photos:
             return False
