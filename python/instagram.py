@@ -8,6 +8,7 @@ import logging
 import sys
 from PIL import Image
 import datetime
+from pprint import pprint
 
 
 def get_numbers_from_filename(filename):
@@ -198,11 +199,22 @@ def get_json(url, tag):
     parse_json(top_posts)
     tag_page = insta_json['entry_data']['TagPage'][0]['tag']['media']['nodes']
     parse_json(tag_page)
-    while insta_json['entry_data']['TagPage'][0]['tag']['media']['page_info']['has_next_page'] is True:
-        cursor = insta_json['entry_data']['TagPage'][0]['tag']['media']['page_info']['end_cursor']
-        new_url = insta_url + tag + '/?max_id=' + cursor
-        logging.info('new_url: ' + new_url)
-        return new_url
+    downloaded_photos = []
+    with open(lsphotos_json, 'r') as fej:
+        dp = json.loads(fej.read())
+    for item in dp['images']:
+        downloaded_photos.append(item['media_id'])
+    pprint(downloaded_photos)
+    for item, entry in enumerate(tag_page):
+        pprint(entry)
+        media_id = entry['id']
+        if media_id in downloaded_photos:
+            return False
+        else:
+            while insta_json['entry_data']['TagPage'][0]['tag']['media']['page_info']['has_next_page'] is True:
+                cursor = insta_json['entry_data']['TagPage'][0]['tag']['media']['page_info']['end_cursor']
+                new_url = insta_url + tag + '/?max_id=' + cursor
+                return new_url
 
 
 def rename_files():
