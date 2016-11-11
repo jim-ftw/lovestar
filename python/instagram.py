@@ -64,7 +64,7 @@ def reset_dir():
         "images": []
     }
     with open(lsphotos_json, 'w') as f:
-        json.dump(instagram_dict, f)
+        json.dump(instagram_dict, f, sort_keys=True)
 
 
 def resize_big_images(image_path):
@@ -102,7 +102,7 @@ def create_thumbnail():
             item['thumbnail_path'] = os.path.relpath(
                 thumbnail_path, os.path.join(os.path.dirname(__file__), '..'))
             with open(lsphotos_json, 'w') as fp:
-                json.dump(lsjson, fp)
+                json.dump(lsjson, fp, sort_keys=True)
             logging.info('created thumbnail for ' + item['media_code'])
 
 
@@ -155,7 +155,7 @@ def parse_json(tag_page_json):
             f.close()
             lsphotos_dict['images'].insert(media_index, entry)
             with open(lsphotos_json, 'w') as fp:
-                json.dump(lsphotos_dict, fp)
+                json.dump(lsphotos_dict, fp, sort_keys=True)
             logging.info('photo added ' + media_id)
             resize_big_images(media_file_path)
             time.sleep(random.randint(1, 10))
@@ -185,7 +185,7 @@ def get_photo_info():
                 item['location']['id'] = media['location']['id']
                 item['location']['location_url'] = str('https://www.instagram.com/explore/locations/' + media['location']['id'])
             with open(lsphotos_json, 'w') as fp:
-                json.dump(lsjson, fp)
+                json.dump(lsjson, fp, sort_keys=True)
             logging.info('updated photo info for ' + item['media_code'])
             time.sleep(random.randint(1, 10))
 
@@ -238,7 +238,7 @@ def rename_files():
             ls_json[fname]['media_file_path'] = os.path.relpath(
                 os.path.join(media_file_folder, file_name), os.path.join(os.path.dirname(__file__), '..'))
             with open(lsphotos_json, 'w') as fp:
-                json.dump(ls_json, fp)
+                json.dump(ls_json, fp, sort_keys=True)
             n += 1
             logging.info('photo renamed ' + fname + ' ' + file_name)
 

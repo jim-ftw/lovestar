@@ -72,7 +72,7 @@ def get_json(club_id):
         f.close()
         strava_dict['members'].append(entry)
         with open(strava_json, 'w') as fp:
-            json.dump(strava_dict, fp)
+            json.dump(strava_dict, fp, sort_keys=True)
         logging.info('photo added ' + str(strava_id))
 
 
